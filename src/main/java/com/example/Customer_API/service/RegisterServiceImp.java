@@ -16,12 +16,18 @@ public class RegisterServiceImp implements  RegisterService{
         this.customerRepo=customerRepo;
     }
 
-    public Boolean register(Register register) {
-        customer.setEmail(register.getEmail());
-        customer.setPassword(register.getPassword());
-        customer.setName(register.getName());
-        customer.setPhoneNo(register.getPhoneNo());
-        customerRepo.save(customer);
-        return true;
+    public String register(Register register) {
+        if(customerRepo.findByEmail(register.getEmail())!=null){
+            System.out.println("Email already registered");
+            return "Email is already registered";
+        }else {
+            customer.setEmail(register.getEmail());
+            customer.setPassword(register.getPassword());
+            customer.setName(register.getName());
+            customer.setPhoneNo(register.getPhoneNo());
+            customerRepo.save(customer);
+
+            return "Successfully registered";
+        }
     }
 }

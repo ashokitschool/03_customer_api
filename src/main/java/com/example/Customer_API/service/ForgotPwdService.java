@@ -2,5 +2,7 @@ package com.example.Customer_API.service;
 
 public interface ForgotPwdService {
 
-    public Boolean sendMail(String email);
+    Boolean sendMail(String email);
+
+    Boolean checkEmailValid(String email);
 }

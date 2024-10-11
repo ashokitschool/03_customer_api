@@ -12,11 +12,19 @@ import java.util.stream.Stream;
 public class ForgotPwdServiceImp implements  ForgotPwdService{
 
     private EmailService emailService;
-    public ForgotPwdServiceImp(EmailService emailService){
+
+    private CustomerRepo customerRepo;
+
+    Customer customer=new Customer();
+    public ForgotPwdServiceImp(EmailService emailService,CustomerRepo customerRepo){
         this.emailService=emailService;
+        this.customerRepo=customerRepo;
     }
 
-
+    public Boolean checkEmailValid(String email){
+        customer=customerRepo.findByEmail(email);
+        return customer != null;
+    }
 
 
     public Boolean sendMail(String email){

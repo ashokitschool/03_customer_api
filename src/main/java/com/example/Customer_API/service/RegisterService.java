@@ -5,5 +5,5 @@ import com.example.Customer_API.entity.Customer;
 
 
 public interface RegisterService {
-    public Boolean register(Register register);
+    public String register(Register register);
 }

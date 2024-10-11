@@ -36,24 +36,27 @@ public class CustomerController {
 
     @PostMapping("/forgotPwdHandle/{email}")
     public Boolean forgotPasswordHandle(@PathVariable String email) {
+        Boolean flag=false;
         System.out.println("Calling forgot password controller with email: " + email);
-        return forgotPwdService.sendMail(email);
+        if(forgotPwdService.checkEmailValid(email)) {
+            flag = forgotPwdService.sendMail(email);
+        }
+        return flag;
     }
 
     @PostMapping("/register")
-    @ResponseBody
-    public Boolean register(@RequestBody Register register){
+    public String register(@RequestBody Register register){
         System.out.println(register);
         System.out.println("Calling register customer controller");
         return registerService.register(register);
     }
 
     @PostMapping("/reset-pwd")
-    public RestResponse resetPassword(@RequestBody ResetPassword resetPassword){
-        RestResponse response=new RestResponse();
+    public String resetPassword(@RequestBody ResetPassword resetPassword){
+
         System.out.println(resetPassword);
         System.out.println("Calling reset password customer controller");
-        response.setResponse(resetPwdService.resetPassword(resetPassword));
-        return response;
+        return resetPwdService.resetPassword(resetPassword);
+
     }
 }

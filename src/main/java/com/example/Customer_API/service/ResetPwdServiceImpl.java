@@ -17,10 +17,10 @@ public class ResetPwdServiceImpl implements ResetPwdService{
 
     Customer customer=new Customer();
 
-    public String  resetPassword(ResetPassword resetPassword){
+    public String  resetPassword(ResetPassword resetPassword,String email){
         System.out.println(resetPassword);
         String response;
-        customer=customerRepo.findByEmail(resetPassword.getEmail());
+        customer=customerRepo.findByEmail(email);
         if(customer==null){
             response="Please enter registered email id";
             System.out.println(response);
@@ -28,19 +28,14 @@ public class ResetPwdServiceImpl implements ResetPwdService{
         }
         if(!resetPassword.getNewPwd().equals(resetPassword.getConfirmNewPwd())){
             response="Passwords must match";
-            System.out.println(response);
-            return response;
-
-
         }else {
             customer.setEmail(customer.getEmail());
             customer.setPassword(resetPassword.getNewPwd());
             customerRepo.save(customer);
             response="Password updated please try to login now";
-            System.out.println(response);
-            return response;
-
         }
+        System.out.println(response);
+        return response;
     }
 
 }

@@ -8,7 +8,10 @@ import com.example.Customer_API.service.ForgotPwdService;
 import com.example.Customer_API.service.LoginService;
 import com.example.Customer_API.service.RegisterService;
 import com.example.Customer_API.service.ResetPwdService;
+import jakarta.mail.MessagingException;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
@@ -35,7 +38,7 @@ public class CustomerController {
     }
 
     @PostMapping("/forgotPwdHandle/{email}")
-    public Boolean forgotPasswordHandle(@PathVariable String email) {
+    public Boolean forgotPasswordHandle(@PathVariable String email) throws MessagingException, IOException {
         Boolean flag=false;
         System.out.println("Calling forgot password controller with email: " + email);
         if(forgotPwdService.checkEmailValid(email)) {
@@ -51,12 +54,12 @@ public class CustomerController {
         return registerService.register(register);
     }
 
-    @PostMapping("/reset-pwd")
-    public String resetPassword(@RequestBody ResetPassword resetPassword){
+    @PostMapping("/reset-pwd/{email}")
+    public String resetPassword(@RequestBody ResetPassword resetPassword,@PathVariable String email){
 
         System.out.println(resetPassword);
         System.out.println("Calling reset password customer controller");
-        return resetPwdService.resetPassword(resetPassword);
+        return resetPwdService.resetPassword(resetPassword,email);
 
     }
 }
